@@ -1,34 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-import AuthProvider from '../../providers/Auth';
-import HomePage from '../../pages/Home';
-import NotFound from '../../pages/NotFound';
+import { BrowserRouter } from 'react-router-dom';
 import Layout from '../Layout';
-import Theme from './Theme.styled';
+import Routes from '../Routes/Routes.component';
+import Theme from './App.styled';
 
 function App() {
-  function GetSwitch() {
-    return (
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    );
-  }
-
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Theme>
-          <Layout>{GetSwitch()}</Layout>
-        </Theme>
-      </AuthProvider>
-    </BrowserRouter>
+    <Theme>
+      <BrowserRouter>
+        <Layout>
+          <Routes />
+        </Layout>
+      </BrowserRouter>
+    </Theme>
   );
 }
 
