@@ -1,9 +1,14 @@
 import React from 'react';
-
-import './Layout.styles.css';
+import Menu from '../Menu';
+import { ContentContainer } from './Layout.styled';
 
 function Layout({ children }) {
-  return <main className="container">{children}</main>;
+  return (
+    <>
+      <Menu />
+      <ContentContainer>{children}</ContentContainer>
+    </>
+  );
 }
 
 export default Layout;
