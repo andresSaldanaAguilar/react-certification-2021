@@ -1,6 +1,7 @@
 import { Grid } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import VideoMosaic from '../../components/VideoMosaic';
+import { listPopularVideos } from '../../utils/paths';
 
 function getVideoMosaics(mockData) {
   return mockData.items.map((item) => {
@@ -13,9 +14,7 @@ function HomePage() {
   const [mockData, setMockData] = useState(null);
 
   useEffect(() => {
-    fetch(
-      'https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=10&key=API_KEY'
-    )
+    fetch(listPopularVideos)
       .then((response) => response.json())
       .then((data) => setMockData(data));
   }, []);

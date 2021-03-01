@@ -3,8 +3,8 @@ import React from 'react';
 import { CustomCardContent, CustomCardContentTitle } from './VideoMosaic.styled';
 
 export function shortenTitle(title) {
-  if (title.length > 45) {
-    const croppedTitle = title.substring(0, 44);
+  if (title.length > 40) {
+    const croppedTitle = title.substring(0, 39);
     return `${croppedTitle}...`;
   }
   return title;
