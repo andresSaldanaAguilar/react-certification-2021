@@ -12,6 +12,7 @@ import {
   ThemeSwitch,
   ToolbarSection,
 } from './Menu.styled';
+import { useSearchDispatch } from '../../Hooks/searchContext';
 
 function Menu() {
   const history = useHistory();
@@ -39,12 +40,19 @@ function Menu() {
   }
 
   function SearchBar() {
+    const setSearch = useSearchDispatch();
     return (
       <SearchContainer>
         <SearchIconContainer>
           <SearchIcon />
         </SearchIconContainer>
-        <CustomInputBase placeholder="Search…" />
+        <CustomInputBase
+          placeholder="Search…"
+          onChange={(e) => {
+            console.log(e.target.value);
+            setSearch(e.target.value);
+          }}
+        />
       </SearchContainer>
     );
   }
