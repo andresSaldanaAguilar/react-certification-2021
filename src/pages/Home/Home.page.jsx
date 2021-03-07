@@ -6,7 +6,6 @@ import { searchVideoPath } from '../../utils/paths';
 
 function getVideoMosaics(data) {
   return data.items.map((video) => {
-    console.log(video);
     return (
       <VideoMosaic key={video.id.videoId} snippet={video.snippet} id={video.id.videoId} />
     );
@@ -19,7 +18,6 @@ function HomePage() {
   const searchState = useSearchState();
 
   useEffect(() => {
-    console.log(searchVideoPath('lol'));
     fetch(searchVideoPath(searchState))
       .then((response) => {
         return response.json();
