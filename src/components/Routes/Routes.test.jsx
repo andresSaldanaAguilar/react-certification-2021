@@ -21,9 +21,9 @@ describe('App Component Tests', () => {
   });
 
   it('Should show not found', async () => {
-    const home = '*';
+    const anythingElse = '*';
     const history = createMemoryHistory();
-    history.push(home);
+    history.push(anythingElse);
     render(
       <Router history={history}>
         <Theme>

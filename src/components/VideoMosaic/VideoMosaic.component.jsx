@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardMedia, Grid, Typography } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { CustomCardContent, CustomCardContentTitle } from './VideoMosaic.styled';
 
 export function shortenTitle(title) {
@@ -19,11 +20,13 @@ export function shortenDescription(description) {
 }
 
 function VideoMosaic(props) {
+  const history = useHistory();
   const { title, thumbnails, description } = props.snippet;
+  const { id } = props;
   return (
     <>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <Card>
+        <Card onClick={() => history.push(`/video=${id}`)}>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -33,13 +36,9 @@ function VideoMosaic(props) {
             />
             <CustomCardContent>
               <CustomCardContentTitle>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {shortenTitle(title)}
-                </Typography>
+                <Typography variant="h6">{shortenTitle(title)}</Typography>
               </CustomCardContentTitle>
-              <Typography variant="body2" component="p">
-                {shortenDescription(description)}
-              </Typography>
+              <Typography variant="caption">{shortenDescription(description)}</Typography>
             </CustomCardContent>
           </CardActionArea>
         </Card>

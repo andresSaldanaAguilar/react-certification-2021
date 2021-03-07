@@ -49,7 +49,6 @@ function Menu() {
         <CustomInputBase
           placeholder="Search…"
           onChange={(e) => {
-            console.log(e.target.value);
             setSearch(e.target.value);
           }}
         />
