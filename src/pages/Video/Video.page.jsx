@@ -1,9 +1,14 @@
-import { Box, Grid, GridList, Typography } from '@material-ui/core';
+import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
 import { ThumbDown, ThumbUp, Visibility } from '@material-ui/icons';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
-import { getVideoPath } from '../../utils/paths';
-import { CardContentVideo, CardVideo, InfoContainer } from './Video.styled';
+import { getVideoPath, getRelatedVideosPath } from '../../utils/paths';
+import {
+  CardContentVideo,
+  CardVideo,
+  CustomGridList,
+  InfoContainer,
+} from './Video.styled';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
@@ -40,10 +45,36 @@ function videoInformation(video) {
   );
 }
 
+function videoSuggestions(suggestions) {
+  return suggestions.items.map((suggestion) => (
+    <GridListTile key={suggestion.id.videoId}>
+      <img
+        src={suggestion.snippet.thumbnails.default.url}
+        alt={suggestion.snippet.title}
+      />
+      <GridListTileBar title={suggestion.snippet.title} />
+    </GridListTile>
+  ));
+}
+function player(video) {
+  return (
+    <iframe
+      width="100%"
+      height="70%"
+      allowFullScreen
+      frameBorder="0"
+      title="rick roll"
+      src={extractEmbededVideo(video.items[0])}
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    />
+  );
+}
+
 function VideoPage() {
   const { id } = useParams();
   const sectionRef = useRef(null);
   const [video, setVideo] = useState(null);
+  const [suggestions, setSuggestions] = useState(null);
 
   useEffect(() => {
     fetch(getVideoPath(id))
@@ -53,6 +84,13 @@ function VideoPage() {
       .then((data) => {
         setVideo(data);
       });
+    fetch(getRelatedVideosPath(id))
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setSuggestions(data);
+      });
   }, [id]);
 
   return (
@@ -60,33 +98,11 @@ function VideoPage() {
       <Grid data-testid="Video" container spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardVideo>
-            {video && (
-              <iframe
-                width="100%"
-                height="70%"
-                allowFullScreen
-                frameBorder="0"
-                title="rick roll"
-                src={extractEmbededVideo(video.items[0])}
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              />
-            )}
+            {video && player(video)}
             <CardContentVideo>{video && videoInformation(video)}</CardContentVideo>
-            <GridList cols={2.5}>
-              {/* {tileData.map((tile) => (
-                <GridListTile key={tile.img}>
-                  <img src={tile.img} alt={tile.title} />
-                  <GridListTileBar
-                    title={tile.title}
-                    actionIcon={
-                      <IconButton aria-label={`star ${tile.title}`}>
-                        <StarBorderIcon className={classes.title} />
-                      </IconButton>
-                    }
-                  />
-                </GridListTile>
-              ))} */}
-            </GridList>
+            <CustomGridList cols={3.5}>
+              {suggestions && videoSuggestions(suggestions)}
+            </CustomGridList>
           </CardVideo>
         </Grid>
       </Grid>

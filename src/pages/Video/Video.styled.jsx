@@ -1,8 +1,8 @@
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, GridList, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const CardVideo = styled(Card)`
-  height: 90vh;
+  height: 78vh;
   background-color: ${(props) => props.theme.colors.blueGrey.light} !important;
 `;
 
@@ -20,4 +20,9 @@ export const InfoContainer = styled.div`
 
 export const MarginTypography = styled(Typography)`
   padding-right: 20px;
+`;
+
+export const CustomGridList = styled(GridList)`
+  flex-wrap: nowrap !important;
+  transform: translateZ(0);
 `;
