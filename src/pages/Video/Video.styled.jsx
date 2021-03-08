@@ -2,7 +2,7 @@ import { Card, CardContent, GridList, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const CardVideo = styled(Card)`
-  height: 78vh;
+  height: 90vh;
   background-color: ${(props) => props.theme.colors.blueGrey.light} !important;
 `;
 

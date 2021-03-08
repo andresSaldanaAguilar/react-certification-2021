@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton, Typography, Button } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   CustomAppBar,
   CustomInputBase,
@@ -21,6 +21,7 @@ function Menu() {
   const handleChange = () => {
     setChecked(!checked);
   };
+  const location = useLocation();
 
   function MenuButton() {
     return (
@@ -62,7 +63,7 @@ function Menu() {
         <CustomToolbar>
           <ToolbarSection>
             {MenuButton()}
-            {SearchBar()}
+            {location.pathname === '/' && SearchBar()}
           </ToolbarSection>
           <ToolbarSection>
             <ThemeSwitch

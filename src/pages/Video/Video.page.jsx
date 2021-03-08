@@ -1,7 +1,7 @@
 import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
-import { ThumbDown, ThumbUp, Visibility } from '@material-ui/icons';
+import { ThumbDown, ThumbUp } from '@material-ui/icons';
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { getVideoPath, getRelatedVideosPath } from '../../utils/paths';
 import {
   CardContentVideo,
@@ -9,6 +9,8 @@ import {
   CustomGridList,
   InfoContainer,
 } from './Video.styled';
+// import mockVideo from '../../utils/video-mock.json';
+// import mockSuggestions from '../../utils/suggestions-mock.json';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
@@ -20,11 +22,11 @@ function videoInformation(video) {
   return (
     <>
       <InfoContainer>
-        <Box mr={1}>
-          <Visibility />
-        </Box>
         <Box>
-          <Typography>{video.items[0].statistics.viewCount}</Typography>
+          <Typography>
+            {video.items[0].statistics.viewCount} Visualizations • Published on{' '}
+            {new Date(video.items[0].snippet.publishedAt).toDateString()}
+          </Typography>
         </Box>
       </InfoContainer>
       <InfoContainer>
@@ -45,17 +47,6 @@ function videoInformation(video) {
   );
 }
 
-function videoSuggestions(suggestions) {
-  return suggestions.items.map((suggestion) => (
-    <GridListTile key={suggestion.id.videoId}>
-      <img
-        src={suggestion.snippet.thumbnails.default.url}
-        alt={suggestion.snippet.title}
-      />
-      <GridListTileBar title={suggestion.snippet.title} />
-    </GridListTile>
-  ));
-}
 function player(video) {
   return (
     <iframe
@@ -70,11 +61,24 @@ function player(video) {
   );
 }
 
+function VideoSuggestion(suggestion, history) {
+  return (
+    <GridListTile
+      key={suggestion.id.videoId}
+      onClick={() => history.push(`/video=${suggestion.id.videoId}`)}
+    >
+      <img src={suggestion.snippet.thumbnails.high.url} alt={suggestion.snippet.title} />
+      <GridListTileBar title={suggestion.snippet.title} />
+    </GridListTile>
+  );
+}
+
 function VideoPage() {
   const { id } = useParams();
   const sectionRef = useRef(null);
   const [video, setVideo] = useState(null);
   const [suggestions, setSuggestions] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     fetch(getVideoPath(id))
@@ -91,6 +95,8 @@ function VideoPage() {
       .then((data) => {
         setSuggestions(data);
       });
+    // setVideo(mockVideo);
+    // setSuggestions(mockSuggestions);
   }, [id]);
 
   return (
@@ -100,9 +106,13 @@ function VideoPage() {
           <CardVideo>
             {video && player(video)}
             <CardContentVideo>{video && videoInformation(video)}</CardContentVideo>
-            <CustomGridList cols={3.5}>
-              {suggestions && videoSuggestions(suggestions)}
-            </CustomGridList>
+            {suggestions && (
+              <CustomGridList cols={3.5}>
+                {suggestions.items.map((suggestion) =>
+                  VideoSuggestion(suggestion, history)
+                )}
+              </CustomGridList>
+            )}
           </CardVideo>
         </Grid>
       </Grid>

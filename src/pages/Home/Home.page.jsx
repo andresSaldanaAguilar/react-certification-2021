@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import VideoMosaic from '../../components/VideoMosaic';
 import { useSearchState } from '../../Hooks/searchContext';
 import { searchVideoPath } from '../../utils/paths';
+// import mockVideos from '../../utils/youtube-videos-mock-v2.json';
 
 function getVideoMosaics(data) {
   return data.items.map((video) => {
@@ -25,6 +26,7 @@ function HomePage() {
       .then((data) => {
         setSearchResults(data);
       });
+    // setSearchResults(mockVideos);
   }, [searchState]);
 
   return (
