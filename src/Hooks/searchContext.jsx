@@ -16,14 +16,14 @@ function SearchProvider({ children }) {
 function useSearchState() {
   const context = useContext(SearchStateContext);
   if (context === undefined) {
-    throw new Error('useSearchState must be used within a CountProvider');
+    throw new Error('useSearchState must be used within a SearchProvider');
   }
   return context;
 }
 function useSearchDispatch() {
   const context = useContext(SearchDispatchContext);
   if (context === undefined) {
-    throw new Error('useSearchDispatch must be used within a CountProvider');
+    throw new Error('useSearchDispatch must be used within a SearchProvider');
   }
   return context;
 }

@@ -14,55 +14,54 @@ import {
 } from './Menu.styled';
 import { useSearchDispatch } from '../../Hooks/searchContext';
 
-function Menu() {
+function HomeButton() {
   const history = useHistory();
-  const [checked, setChecked] = React.useState(false);
+  return (
+    <IconButton
+      onClick={() => history.push('/')}
+      className="title"
+      edge="start"
+      color="inherit"
+      data-testid="HomeButton"
+    >
+      <YouTubeIcon />
+      <Typography variant="body1" noWrap>
+        MyTube
+      </Typography>
+    </IconButton>
+  );
+}
 
+function SearchBar() {
+  const setSearch = useSearchDispatch();
+  return (
+    <SearchContainer data-testid="SearchBar">
+      <SearchIconContainer>
+        <SearchIcon />
+      </SearchIconContainer>
+      <CustomInputBase
+        placeholder="Search…"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
+    </SearchContainer>
+  );
+}
+
+function Menu() {
+  const [checked, setChecked] = React.useState(false);
   const handleChange = () => {
     setChecked(!checked);
   };
   const location = useLocation();
-
-  function MenuButton() {
-    return (
-      <IconButton
-        onClick={() => history.push('/')}
-        className="title"
-        edge="start"
-        color="inherit"
-        data-testid="MenuButton"
-      >
-        <YouTubeIcon />
-        <Typography variant="body1" noWrap>
-          MyTube
-        </Typography>
-      </IconButton>
-    );
-  }
-
-  function SearchBar() {
-    const setSearch = useSearchDispatch();
-    return (
-      <SearchContainer>
-        <SearchIconContainer>
-          <SearchIcon />
-        </SearchIconContainer>
-        <CustomInputBase
-          placeholder="Search…"
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-        />
-      </SearchContainer>
-    );
-  }
 
   return (
     <>
       <CustomAppBar position="fixed" data-testid="CustomAppBar">
         <CustomToolbar>
           <ToolbarSection>
-            {MenuButton()}
+            {HomeButton()}
             {location.pathname === '/' && SearchBar()}
           </ToolbarSection>
           <ToolbarSection>
