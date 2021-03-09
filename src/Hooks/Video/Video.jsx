@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import doFetch from '../utils/fetch';
-import { getRelatedVideosPath, getVideoPath, searchVideoPath } from '../utils/paths';
-import { useSearchState } from './SearchProvider';
+import doFetch from '../../utils/fetch';
+import { getRelatedVideosPath, getVideoPath, searchVideoPath } from '../../utils/paths';
+import { useSearchState } from '../SearchProvider/SearchProvider';
 
 function useSearchVideo() {
-  const searchState = useSearchState();
+  const searchState = useSearchState(); //mockear esta funcion
   const [searchResults, setSearchResults] = useState(null);
   useEffect(() => {
     doFetch(searchVideoPath(searchState), setSearchResults);

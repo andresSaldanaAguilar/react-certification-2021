@@ -8,7 +8,7 @@ import {
   CustomGridList,
   InfoContainer,
 } from './Video.styled';
-import { useGetVideo } from '../../Hooks/Video';
+import { useGetVideo } from '../../Hooks/Video/Video';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(

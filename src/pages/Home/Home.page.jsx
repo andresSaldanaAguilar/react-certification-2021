@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
 import React, { useRef } from 'react';
 import VideoMosaic from '../../components/VideoMosaic';
-import { useSearchVideo } from '../../Hooks/Video';
+import { useSearchVideo } from '../../Hooks/Video/Video';
 
 function getVideoMosaics(data) {
   return data.items.map((video) => {
