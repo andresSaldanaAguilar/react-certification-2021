@@ -1,16 +1,14 @@
 import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
 import { ThumbDown, ThumbUp } from '@material-ui/icons';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useParams, useHistory } from 'react-router';
-import { getVideoPath, getRelatedVideosPath } from '../../utils/paths';
 import {
   CardContentVideo,
   CardVideo,
   CustomGridList,
   InfoContainer,
 } from './Video.styled';
-// import mockVideo from '../../utils/video-mock.json';
-// import mockSuggestions from '../../utils/suggestions-mock.json';
+import { useGetVideo } from '../../Hooks/Video';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
@@ -76,28 +74,8 @@ function VideoSuggestion(suggestion, history) {
 function VideoPage() {
   const { id } = useParams();
   const sectionRef = useRef(null);
-  const [video, setVideo] = useState(null);
-  const [suggestions, setSuggestions] = useState(null);
   const history = useHistory();
-
-  useEffect(() => {
-    fetch(getVideoPath(id))
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setVideo(data);
-      });
-    fetch(getRelatedVideosPath(id))
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setSuggestions(data);
-      });
-    // setVideo(mockVideo);
-    // setSuggestions(mockSuggestions);
-  }, [id]);
+  const { video, suggestions } = useGetVideo(id);
 
   return (
     <section ref={sectionRef}>

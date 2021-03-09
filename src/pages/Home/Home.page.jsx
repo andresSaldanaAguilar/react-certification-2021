@@ -1,9 +1,7 @@
 import { Grid } from '@material-ui/core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import VideoMosaic from '../../components/VideoMosaic';
-import { useSearchState } from '../../Hooks/searchContext';
-import { searchVideoPath } from '../../utils/paths';
-// import mockVideos from '../../utils/youtube-videos-mock-v2.json';
+import { useSearchVideo } from '../../Hooks/Video';
 
 function getVideoMosaics(data) {
   return data.items.map((video) => {
@@ -15,19 +13,7 @@ function getVideoMosaics(data) {
 
 function HomePage() {
   const sectionRef = useRef(null);
-  const [searchResults, setSearchResults] = useState(null);
-  const searchState = useSearchState();
-
-  useEffect(() => {
-    fetch(searchVideoPath(searchState))
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setSearchResults(data);
-      });
-    // setSearchResults(mockVideos);
-  }, [searchState]);
+  const searchResults = useSearchVideo();
 
   return (
     <section ref={sectionRef}>

@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import Menu from './Menu.component';
 import Theme from '../App/App.styled';
-import { SearchProvider } from '../../Hooks/searchContext';
+import { SearchProvider } from '../../Hooks/SearchProvider';
 
 describe('Menu Component Tests', () => {
   it('Should render menu with search bar', async () => {
