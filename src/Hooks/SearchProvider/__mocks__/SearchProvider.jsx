@@ -1,4 +1,4 @@
-const useSearchState = jest.fn(() =>  {
+const useSearchState = jest.fn(() => {
   return '';
 });
 

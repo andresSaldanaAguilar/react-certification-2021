@@ -4,7 +4,7 @@ import { getRelatedVideosPath, getVideoPath, searchVideoPath } from '../../utils
 import { useSearchState } from '../SearchProvider/SearchProvider';
 
 function useSearchVideo() {
-  const searchState = useSearchState(); //mockear esta funcion
+  const searchState = useSearchState();
   const [searchResults, setSearchResults] = useState(null);
   useEffect(() => {
     doFetch(searchVideoPath(searchState), setSearchResults);

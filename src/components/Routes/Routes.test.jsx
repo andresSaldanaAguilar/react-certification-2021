@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import Routes from './Routes.component';
 import Theme from '../App/App.styled';
-import { SearchProvider } from '../../Hooks/SearchProvider';
+import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
 
 describe('App Component Tests', () => {
   it('Should redirect to home', async () => {

@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import Layout from './Layout.component';
 import Theme from '../App/App.styled';
-import { SearchProvider } from '../../Hooks/SearchProvider';
+import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
 
 describe('Layout Component Tests', () => {
   const home = '/';

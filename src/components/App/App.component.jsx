@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { SearchProvider } from '../../Hooks/SearchProvider';
+import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
 import Layout from '../Layout';
 import Routes from '../Routes/Routes.component';
 import Theme from './App.styled';

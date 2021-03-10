@@ -12,7 +12,7 @@ import {
   ThemeSwitch,
   ToolbarSection,
 } from './Menu.styled';
-import { useSearchDispatch } from '../../Hooks/SearchProvider';
+import { useSearchDispatch } from '../../Hooks/SearchProvider/SearchProvider';
 
 function HomeButton() {
   const history = useHistory();

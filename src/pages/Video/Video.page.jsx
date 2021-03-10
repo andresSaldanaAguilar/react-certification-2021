@@ -7,13 +7,17 @@ import {
   CardVideo,
   CustomGridList,
   InfoContainer,
-} from './Video.styled';
+} from './Video.page.styled';
 import { useGetVideo } from '../../Hooks/Video/Video';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
     /www.youtube.com\/embed\/([A-Za-z_0-9])+/g
   )}`;
+}
+
+export function formatDate(date) {
+  return new Date(date).toDateString();
 }
 
 function videoInformation(video) {
@@ -23,7 +27,7 @@ function videoInformation(video) {
         <Box>
           <Typography>
             {video.items[0].statistics.viewCount} Visualizations • Published on{' '}
-            {new Date(video.items[0].snippet.publishedAt).toDateString()}
+            {formatDate(video.items[0].snippet.publishedAt)}
           </Typography>
         </Box>
       </InfoContainer>
@@ -52,7 +56,7 @@ function player(video) {
       height="70%"
       allowFullScreen
       frameBorder="0"
-      title="rick roll"
+      title={video.items[0].snippet.title}
       src={extractEmbededVideo(video.items[0])}
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
     />

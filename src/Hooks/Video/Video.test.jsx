@@ -7,27 +7,45 @@ import searchResults from '../../utils/youtube-videos-mock-v2.json';
 jest.mock('../SearchProvider/SearchProvider');
 
 describe('Video Hooks Testing', () => {
-  beforeAll(() => {
-    jest.spyOn(global, 'fetch').mockImplementation(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ video }),
-      })
-    );
-  });
-
   afterEach(() => {
     global.fetch.mockClear();
   });
   afterAll(() => {
     global.fetch.mockRestore();
   });
+
   describe('Use Get Video', () => {
-    it('should search video', async () => {
+    beforeAll(() => {
+      jest.spyOn(global, 'fetch').mockImplementation(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ ...video }),
+        })
+      );
+    });
+
+    it('should get searched video', async () => {
       const { result, waitForNextUpdate } = renderHook(() => useGetVideo('TEST_ID'));
       await waitForNextUpdate();
-      expect(result.current.video.video).toBe(video);
+      expect(result.current.video).toStrictEqual(video);
     });
   });
+
+  describe('Use Get Video', () => {
+    beforeAll(() => {
+      jest.spyOn(global, 'fetch').mockImplementation(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({ ...suggestions }),
+        })
+      );
+    });
+
+    it('should get video suggestions ', async () => {
+      const { result, waitForNextUpdate } = renderHook(() => useGetVideo('TEST_ID'));
+      await waitForNextUpdate();
+      expect(result.current.suggestions).toStrictEqual(suggestions);
+    });
+  });
+
   describe('Use Search Video', () => {
     beforeEach(() => {
       jest.spyOn(global, 'fetch').mockImplementation(() =>
