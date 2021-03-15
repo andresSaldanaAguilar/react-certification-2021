@@ -9,7 +9,7 @@ import suggestions from '../../utils/suggestions-mock.json';
 
 jest.mock('../../Hooks/Video/Video');
 
-describe('Video View', () => {
+describe('Video View Tests', () => {
   const home = '/video=TEST_ID';
   const history = createMemoryHistory();
   history.push(home);

@@ -25,13 +25,13 @@ function VideoMosaic(props) {
   const { id } = props;
   return (
     <>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <Card onClick={() => history.push(`/video=${id}`)}>
+      <Grid data-testid="VideoMosaic" item xs={12} sm={6} md={4} lg={3}>
+        <Card data-testid="VideoMosaicLink" onClick={() => history.push(`/video=${id}`)}>
           <CardActionArea>
             <CardMedia
               component="img"
               src={thumbnails.high.url}
-              title={title}
+              title={shortenTitle(title)}
               alt={title}
             />
             <CustomCardContent>
