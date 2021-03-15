@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 export const CardVideo = styled(Card)`
   height: 90vh;
-  background-color: ${(props) => props.theme.colors.blueGrey.light} !important;
+  background-color: ${(props) => props.theme.palette.light} !important;
 `;
 
 export const CardContentVideo = styled(CardContent)`
   display: flex;
   justify-content: space-between;
-  color: white;
+  color: ${(props) => props.theme.fontColor};
   align-items: center;
   flex-wrap: wrap;
 `;

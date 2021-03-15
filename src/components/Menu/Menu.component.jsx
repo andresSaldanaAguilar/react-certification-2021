@@ -3,16 +3,17 @@ import { IconButton, Typography, Button } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory, useLocation } from 'react-router-dom';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 import {
   CustomAppBar,
   CustomInputBase,
   CustomToolbar,
   SearchContainer,
   SearchIconContainer,
-  ThemeSwitch,
   ToolbarSection,
 } from './Menu.styled';
 import { useSearchDispatch } from '../../Hooks/SearchProvider/SearchProvider';
+import { useThemeDispatch } from '../../Hooks/Theme/Theme';
 
 function HomeButton() {
   const history = useHistory();
@@ -40,6 +41,7 @@ function SearchBar() {
         <SearchIcon />
       </SearchIconContainer>
       <CustomInputBase
+        data-testid="SearchInput"
         placeholder="Search…"
         onChange={(e) => {
           setSearch(e.target.value);
@@ -51,8 +53,10 @@ function SearchBar() {
 
 function Menu() {
   const [checked, setChecked] = React.useState(false);
+  const setTheme = useThemeDispatch();
   const handleChange = () => {
     setChecked(!checked);
+    setTheme(checked ? 'light' : 'dark');
   };
   const location = useLocation();
 
@@ -65,12 +69,7 @@ function Menu() {
             {location.pathname === '/' && SearchBar()}
           </ToolbarSection>
           <ToolbarSection>
-            <ThemeSwitch
-              data-testid="ThemeSwitch"
-              checked={checked}
-              onChange={handleChange}
-              color="default"
-            />
+            <Brightness4Icon fontSize="medium" onClick={handleChange} />
             <Button color="inherit">Login</Button>
           </ToolbarSection>
         </CustomToolbar>

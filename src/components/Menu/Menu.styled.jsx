@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { fade } from '@material-ui/core/styles';
 
 export const CustomAppBar = styled(AppBar)`
-  background-color: ${(props) => props.theme.colors.blueGrey.normal} !important;
+  background-color: ${(props) => props.theme.palette.normal} !important;
 `;
 
 export const CustomToolbar = styled(Toolbar)`
@@ -18,9 +18,9 @@ export const ToolbarSection = styled.div`
 export const SearchContainer = styled.div`
   position: relative;
   border-radius: 5px;
-  background-color: ${(props) => fade(props.theme.colors.white, 0.15)};
+  background-color: ${(props) => fade(props.theme.fontColor, 0.15)};
   ${ToolbarSection}:hover & {
-    background-color: ${(props) => fade(props.theme.colors.white, 0.25)};
+    background-color: ${(props) => fade(props.theme.fontColor, 0.25)};
   }
   margin-left: 1em;
 `;
