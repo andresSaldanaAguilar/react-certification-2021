@@ -1,6 +1,13 @@
+import { styled, Typography } from '@material-ui/core';
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { useThemeState } from '../../Hooks/Theme/Theme';
+
+export const GlobalStyles = createGlobalStyle`
+  body {
+    background: ${(props) => props.theme.palette.dark};
+    color: ${(props) => props.theme.fontColor};
+}`;
 
 const darkTheme = {
   palette: { normal: '#263238', dark: '#000a12', light: '#4f5b62' },
@@ -9,8 +16,12 @@ const darkTheme = {
 
 const lightTheme = {
   palette: { normal: '#FFFFFF', dark: '#CCCCCC', light: '#FFFFFF' },
-  fontColor: '#000000',
+  fontColor: '#263238',
 };
+
+export const ThemedTypography = styled(Typography)`
+  color: ${(props) => props.theme.fontColor} !important;
+`;
 
 const Theme = ({ children }) => {
   const currentTheme = useThemeState();

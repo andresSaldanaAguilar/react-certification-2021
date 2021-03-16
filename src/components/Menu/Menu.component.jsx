@@ -1,15 +1,18 @@
 import React from 'react';
 import { IconButton, Typography, Button } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
-import SearchIcon from '@material-ui/icons/Search';
 import { useHistory, useLocation } from 'react-router-dom';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import {
   CustomAppBar,
+  CustomButton,
+  CustomIconButton,
   CustomInputBase,
   CustomToolbar,
   SearchContainer,
+  SearchIcon,
   SearchIconContainer,
+  ThemeIcon,
   ToolbarSection,
 } from './Menu.styled';
 import { useSearchDispatch } from '../../Hooks/SearchProvider/SearchProvider';
@@ -18,18 +21,16 @@ import { useThemeDispatch } from '../../Hooks/Theme/Theme';
 function HomeButton() {
   const history = useHistory();
   return (
-    <IconButton
+    <CustomIconButton
       onClick={() => history.push('/')}
-      className="title"
       edge="start"
-      color="inherit"
       data-testid="HomeButton"
     >
       <YouTubeIcon />
       <Typography variant="body1" noWrap>
         MyTube
       </Typography>
-    </IconButton>
+    </CustomIconButton>
   );
 }
 
@@ -69,8 +70,12 @@ function Menu() {
             {location.pathname === '/' && SearchBar()}
           </ToolbarSection>
           <ToolbarSection>
-            <Brightness4Icon fontSize="medium" onClick={handleChange} />
-            <Button color="inherit">Login</Button>
+            <ThemeIcon fontSize="large" onClick={handleChange} />
+            <CustomButton>
+              <Typography variant="body1" noWrap>
+                Login
+              </Typography>
+            </CustomButton>
           </ToolbarSection>
         </CustomToolbar>
       </CustomAppBar>
