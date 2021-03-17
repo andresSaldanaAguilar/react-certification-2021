@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import Routes from './Routes.component';
-import Theme from '../App/App.styled';
 import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
+import { Theme } from '../../Hooks/Theme/Theme';
 
 describe('App Component Tests', () => {
   it('Should redirect to home', async () => {

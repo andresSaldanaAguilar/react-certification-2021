@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import VideoPage, { formatDate } from './Video.page';
-import Theme from '../../components/App/App.styled';
 import video from '../../utils/video-mock.json';
 import suggestions from '../../utils/suggestions-mock.json';
+import { Theme } from '../../Hooks/Theme/Theme';
 
 jest.mock('../../Hooks/Video/Video');
 

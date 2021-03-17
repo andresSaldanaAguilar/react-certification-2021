@@ -1,25 +1,23 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
-import { ThemeProvider } from '../../Hooks/Theme/Theme';
+import { Theme } from '../../Hooks/Theme/Theme';
 import Layout from '../Layout';
 import Routes from '../Routes/Routes.component';
-import Theme, { GlobalStyles } from './App.styled';
+import { GlobalStyles } from './App.styled';
 
 function App() {
   return (
-    <ThemeProvider>
-      <Theme>
-        <GlobalStyles />
-        <BrowserRouter>
-          <SearchProvider>
-            <Layout>
-              <Routes />
-            </Layout>
-          </SearchProvider>
-        </BrowserRouter>
-      </Theme>
-    </ThemeProvider>
+    <Theme>
+      <GlobalStyles />
+      <BrowserRouter>
+        <SearchProvider>
+          <Layout>
+            <Routes />
+          </Layout>
+        </SearchProvider>
+      </BrowserRouter>
+    </Theme>
   );
 }
 

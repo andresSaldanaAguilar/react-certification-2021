@@ -1,30 +1,35 @@
 import React, { createContext, useContext, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+
+const darkTheme = {
+  palette: { normal: '#263238', dark: '#000a12', light: '#4f5b62' },
+  fontColor: '#FFFFFF',
+};
+
+const lightTheme = {
+  palette: { normal: '#FFFFFF', dark: '#CCCCCC', light: '#FFFFFF' },
+  fontColor: '#263238',
+};
 
 const ThemeStateContext = createContext();
 const ThemeDispatchContext = createContext();
 
-function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
+function Theme({ children }) {
+  const [theme, setTheme] = useState(lightTheme);
   return (
     <ThemeStateContext.Provider value={theme}>
       <ThemeDispatchContext.Provider value={setTheme}>
-        {children}
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </ThemeDispatchContext.Provider>
     </ThemeStateContext.Provider>
   );
 }
-function useThemeState() {
-  const context = useContext(ThemeStateContext);
-  if (context === undefined) {
-    throw new Error('useThemeState must be used within a ThemeProvider');
-  }
-  return context;
+
+function useSwitchTheme() {
+  const setTheme = useContext(ThemeDispatchContext);
+  const theme = useContext(ThemeStateContext);
+  return () => {
+    setTheme(theme === lightTheme ? darkTheme : lightTheme);
+  };
 }
-function useThemeDispatch() {
-  const context = useContext(ThemeDispatchContext);
-  if (context === undefined) {
-    throw new Error('useThemeDispatch must be used within a ThemeProvider');
-  }
-  return context;
-}
-export { ThemeProvider, useThemeState, useThemeDispatch };
+export { Theme, useSwitchTheme };

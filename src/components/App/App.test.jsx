@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App.component';
-import Theme from './App.styled';
+import { Theme } from '../../Hooks/Theme/Theme';
 
 describe('App Component Tests', () => {
   beforeEach(() => {

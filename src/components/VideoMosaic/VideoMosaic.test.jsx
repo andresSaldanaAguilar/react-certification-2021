@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import VideoMosaic, { shortenTitle, shortenDescription } from './VideoMosaic.component';
-import Theme from '../App/App.styled';
 import mockData from '../../utils/youtube-videos-mock-v2.json';
+import { Theme } from '../../Hooks/Theme/Theme';
 
 const mockVideoShortText = mockData.items[0];
 const mockVideoLongText = mockData.items[2];
