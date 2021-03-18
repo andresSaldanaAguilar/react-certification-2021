@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import Menu from './Menu.component';
-import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
+import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
 
 describe('Menu Component Tests', () => {
@@ -14,9 +14,9 @@ describe('Menu Component Tests', () => {
     render(
       <Router history={history}>
         <Theme>
-          <SearchProvider>
+          <Search>
             <Menu />
-          </SearchProvider>
+          </Search>
         </Theme>
       </Router>
     );
@@ -31,9 +31,9 @@ describe('Menu Component Tests', () => {
     render(
       <Router history={history}>
         <Theme>
-          <SearchProvider>
+          <Search>
             <Menu />
-          </SearchProvider>
+          </Search>
         </Theme>
       </Router>
     );

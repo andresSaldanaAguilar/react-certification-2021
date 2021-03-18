@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import Layout from './Layout.component';
-import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
+import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
 
 describe('Layout Component Tests', () => {
@@ -14,9 +14,9 @@ describe('Layout Component Tests', () => {
     render(
       <Theme>
         <Router history={history}>
-          <SearchProvider>
+          <Search>
             <Layout />
-          </SearchProvider>
+          </Search>
         </Router>
       </Theme>
     );

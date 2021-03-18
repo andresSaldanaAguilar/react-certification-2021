@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import HomePage from './Home.page';
-import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
+import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
 
 jest.mock('../../Hooks/Video/Video');
@@ -16,9 +16,9 @@ describe('Home View Tests', () => {
       <Theme>
         <Theme>
           <Router history={history}>
-            <SearchProvider>
+            <Search>
               <HomePage />
-            </SearchProvider>
+            </Search>
           </Router>
         </Theme>
       </Theme>

@@ -14,7 +14,7 @@ import {
   ThemeIcon,
   ToolbarSection,
 } from './Menu.styled';
-import { useSearchDispatch } from '../../Hooks/SearchProvider/SearchProvider';
+import { useSearchDispatch } from '../../Hooks/Search/Search';
 import { useSwitchTheme } from '../../Hooks/Theme/Theme';
 
 function HomeButton() {

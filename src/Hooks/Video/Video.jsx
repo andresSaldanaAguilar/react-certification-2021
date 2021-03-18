@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import doFetch from '../../utils/fetch';
 import { getRelatedVideosPath, getVideoPath, searchVideoPath } from '../../utils/paths';
-import { useSearchState } from '../SearchProvider/SearchProvider';
+import { useSearchState } from '../Search/Search';
 
 function useSearchVideo() {
   const searchState = useSearchState();

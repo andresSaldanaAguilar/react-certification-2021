@@ -72,6 +72,10 @@
         "lines": 70,
         "statements": 70
       }
-    }
+    },
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/src/utils/**"
+    ]
   }
 }
