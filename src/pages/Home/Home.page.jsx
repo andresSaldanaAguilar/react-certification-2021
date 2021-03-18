@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import React, { useRef } from 'react';
+import React from 'react';
 import VideoMosaic from '../../components/VideoMosaic';
 import { useSearchVideo } from '../../Hooks/Video/Video';
 
@@ -12,11 +12,10 @@ function getVideoMosaics(data) {
 }
 
 function HomePage() {
-  const sectionRef = useRef(null);
   const searchResults = useSearchVideo();
 
   return (
-    <section ref={sectionRef}>
+    <section>
       <Grid data-testid="Home" container spacing={1}>
         {searchResults && getVideoMosaics(searchResults)}
       </Grid>
