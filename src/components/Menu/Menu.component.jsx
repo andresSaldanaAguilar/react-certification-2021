@@ -1,77 +1,77 @@
 import React from 'react';
-import { IconButton, Typography, Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
-import SearchIcon from '@material-ui/icons/Search';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   CustomAppBar,
+  CustomButton,
+  CustomIconButton,
   CustomInputBase,
   CustomToolbar,
   SearchContainer,
+  SearchIcon,
   SearchIconContainer,
-  ThemeSwitch,
+  ThemeIcon,
   ToolbarSection,
 } from './Menu.styled';
-import { useSearchDispatch } from '../../Hooks/SearchProvider/SearchProvider';
+import { useSearchDispatch } from '../../Hooks/Search/Search';
+import { useSwitchTheme } from '../../Hooks/Theme/Theme';
 
 function HomeButton() {
   const history = useHistory();
   return (
-    <IconButton
+    <CustomIconButton
       onClick={() => history.push('/')}
-      className="title"
       edge="start"
-      color="inherit"
       data-testid="HomeButton"
     >
       <YouTubeIcon />
       <Typography variant="body1" noWrap>
         MyTube
       </Typography>
-    </IconButton>
+    </CustomIconButton>
   );
 }
 
-function SearchBar() {
+function SearchBar(path) {
   const setSearch = useSearchDispatch();
+  const homePage = '/';
   return (
-    <SearchContainer data-testid="SearchBar">
-      <SearchIconContainer>
-        <SearchIcon />
-      </SearchIconContainer>
-      <CustomInputBase
-        placeholder="Search…"
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
-      />
-    </SearchContainer>
+    path === homePage && (
+      <SearchContainer data-testid="SearchBar">
+        <SearchIconContainer>
+          <SearchIcon />
+        </SearchIconContainer>
+        <CustomInputBase
+          data-testid="SearchInput"
+          placeholder="Search…"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        />
+      </SearchContainer>
+    )
   );
 }
 
 function Menu() {
-  const [checked, setChecked] = React.useState(false);
-  const handleChange = () => {
-    setChecked(!checked);
-  };
+  const switchTheme = useSwitchTheme();
   const location = useLocation();
-
   return (
     <>
       <CustomAppBar position="fixed" data-testid="CustomAppBar">
         <CustomToolbar>
           <ToolbarSection>
             {HomeButton()}
-            {location.pathname === '/' && SearchBar()}
+            {SearchBar(location.pathname)}
           </ToolbarSection>
           <ToolbarSection>
-            <ThemeSwitch
-              data-testid="ThemeSwitch"
-              checked={checked}
-              onChange={handleChange}
-              color="default"
-            />
-            <Button color="inherit">Login</Button>
+            <ThemeIcon fontSize="default" onClick={switchTheme} />
+            <CustomButton>
+              <Typography variant="body1" noWrap>
+                Login
+              </Typography>
+            </CustomButton>
           </ToolbarSection>
         </CustomToolbar>
       </CustomAppBar>

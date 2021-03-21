@@ -1,19 +1,21 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
+import { Search } from '../../Hooks/Search/Search';
+import { Theme } from '../../Hooks/Theme/Theme';
 import Layout from '../Layout';
 import Routes from '../Routes/Routes.component';
-import Theme from './App.styled';
+import { GlobalStyles } from './App.styled';
 
 function App() {
   return (
     <Theme>
+      <GlobalStyles />
       <BrowserRouter>
-        <SearchProvider>
+        <Search>
           <Layout>
             <Routes />
           </Layout>
-        </SearchProvider>
+        </Search>
       </BrowserRouter>
     </Theme>
   );

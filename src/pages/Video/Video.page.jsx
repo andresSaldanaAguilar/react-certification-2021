@@ -1,6 +1,6 @@
 import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
 import { ThumbDown, ThumbUp } from '@material-ui/icons';
-import React, { useRef } from 'react';
+import React from 'react';
 import { useParams, useHistory } from 'react-router';
 import {
   CardContentVideo,
@@ -77,12 +77,11 @@ function VideoSuggestion(suggestion, history) {
 
 function VideoPage() {
   const { id } = useParams();
-  const sectionRef = useRef(null);
   const history = useHistory();
   const { video, suggestions } = useGetVideo(id);
 
   return (
-    <section ref={sectionRef}>
+    <section>
       <Grid data-testid="Video" container spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardVideo>

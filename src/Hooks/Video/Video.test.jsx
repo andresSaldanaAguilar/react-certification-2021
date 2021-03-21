@@ -4,7 +4,7 @@ import video from '../../utils/video-mock.json';
 import suggestions from '../../utils/suggestions-mock.json';
 import searchResults from '../../utils/youtube-videos-mock-v2.json';
 
-jest.mock('../SearchProvider/SearchProvider');
+jest.mock('../Search/Search');
 
 describe('Video Hooks Testing', () => {
   afterEach(() => {
