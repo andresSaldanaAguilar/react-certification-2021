@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
+import SearchIcon from '@material-ui/icons/Search';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   CustomAppBar,
@@ -9,16 +10,15 @@ import {
   CustomInputBase,
   CustomToolbar,
   SearchContainer,
-  SearchIcon,
   SearchIconContainer,
   ThemeIcon,
   ToolbarSection,
 } from './Menu.styled';
-import { useSearchDispatch } from '../../Hooks/Search/Search';
 import { useSwitchTheme } from '../../Hooks/Theme/Theme';
+import { useSession } from '../../Hooks/Session/Session';
+import { useSearchDispatch } from '../../Hooks/Search/Search';
 
-function HomeButton() {
-  const history = useHistory();
+function HomeButton(history) {
   return (
     <CustomIconButton
       onClick={() => history.push('/')}
@@ -54,22 +54,39 @@ function SearchBar(path) {
   );
 }
 
+function handleLoginButton(userSession, history) {
+  const { session, dispatchSession } = userSession;
+  if (session) {
+    dispatchSession({ type: 'logout' });
+    history.push('/');
+  } else {
+    history.push('/login');
+  }
+}
+
 function Menu() {
   const switchTheme = useSwitchTheme();
   const location = useLocation();
+  const history = useHistory();
+  const userSession = useSession();
+  const { session } = userSession;
   return (
     <>
       <CustomAppBar position="fixed" data-testid="CustomAppBar">
         <CustomToolbar>
           <ToolbarSection>
-            {HomeButton()}
+            {HomeButton(history)}
             {SearchBar(location.pathname)}
           </ToolbarSection>
           <ToolbarSection>
             <ThemeIcon fontSize="default" onClick={switchTheme} />
-            <CustomButton>
+            <CustomButton
+              onClick={() => {
+                handleLoginButton(userSession, history);
+              }}
+            >
               <Typography variant="body1" noWrap>
-                Login
+                {session ? 'Logout' : 'Login'}
               </Typography>
             </CustomButton>
           </ToolbarSection>
