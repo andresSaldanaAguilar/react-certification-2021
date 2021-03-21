@@ -1,13 +1,23 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
 import Layout from './Layout.component';
 import Theme from '../App/App.styled';
+import { SearchProvider } from '../../Hooks/SearchProvider/SearchProvider';
 
 describe('Layout Component Tests', () => {
+  const home = '/';
+  const history = createMemoryHistory();
+  history.push(home);
   beforeEach(() => {
     render(
       <Theme>
-        <Layout />
+        <Router history={history}>
+          <SearchProvider>
+            <Layout />
+          </SearchProvider>
+        </Router>
       </Theme>
     );
   });

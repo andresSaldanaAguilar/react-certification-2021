@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton, Typography, Button } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   CustomAppBar,
   CustomInputBase,
@@ -12,50 +12,57 @@ import {
   ThemeSwitch,
   ToolbarSection,
 } from './Menu.styled';
+import { useSearchDispatch } from '../../Hooks/SearchProvider/SearchProvider';
+
+function HomeButton() {
+  const history = useHistory();
+  return (
+    <IconButton
+      onClick={() => history.push('/')}
+      className="title"
+      edge="start"
+      color="inherit"
+      data-testid="HomeButton"
+    >
+      <YouTubeIcon />
+      <Typography variant="body1" noWrap>
+        MyTube
+      </Typography>
+    </IconButton>
+  );
+}
+
+function SearchBar() {
+  const setSearch = useSearchDispatch();
+  return (
+    <SearchContainer data-testid="SearchBar">
+      <SearchIconContainer>
+        <SearchIcon />
+      </SearchIconContainer>
+      <CustomInputBase
+        placeholder="Search…"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
+    </SearchContainer>
+  );
+}
 
 function Menu() {
-  const history = useHistory();
   const [checked, setChecked] = React.useState(false);
-
   const handleChange = () => {
     setChecked(!checked);
   };
-
-  function MenuButton() {
-    return (
-      <IconButton
-        onClick={() => history.push('/')}
-        className="title"
-        edge="start"
-        color="inherit"
-        data-testid="MenuButton"
-      >
-        <YouTubeIcon />
-        <Typography variant="body1" noWrap>
-          MyTube
-        </Typography>
-      </IconButton>
-    );
-  }
-
-  function SearchBar() {
-    return (
-      <SearchContainer>
-        <SearchIconContainer>
-          <SearchIcon />
-        </SearchIconContainer>
-        <CustomInputBase placeholder="Search…" />
-      </SearchContainer>
-    );
-  }
+  const location = useLocation();
 
   return (
     <>
       <CustomAppBar position="fixed" data-testid="CustomAppBar">
         <CustomToolbar>
           <ToolbarSection>
-            {MenuButton()}
-            {SearchBar()}
+            {HomeButton()}
+            {location.pathname === '/' && SearchBar()}
           </ToolbarSection>
           <ToolbarSection>
             <ThemeSwitch

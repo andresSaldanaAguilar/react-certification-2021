@@ -16,9 +16,14 @@ describe('App Component Tests', () => {
     expect(screen.getByTestId('Home')).toBeInTheDocument();
   });
 
-  it('Should redirect to home the home button', async () => {
-    const menuButton = screen.getByTestId('MenuButton');
-    menuButton.click();
+  it('Should redirect to home the home button on the menu', async () => {
+    const homeButton = screen.getByTestId('HomeButton');
+    homeButton.click();
     expect(screen.getByTestId('Home')).toBeInTheDocument();
   });
+
+  // it('Should redirect to home the home button on the menu', async () => {
+  //   const homeButton = screen.getByTestId('SearchBar');
+
+  // });
 });
