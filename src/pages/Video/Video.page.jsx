@@ -1,5 +1,5 @@
 import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
-import { ThumbDown, ThumbUp } from '@material-ui/icons';
+import { Star, StarBorder, ThumbDown, ThumbUp } from '@material-ui/icons';
 import React from 'react';
 import { useParams, useHistory } from 'react-router';
 import {
@@ -9,6 +9,8 @@ import {
   InfoContainer,
 } from './Video.page.styled';
 import { useGetVideo } from '../../Hooks/Video/Video';
+import { useSession } from '../../Hooks/Session/Session';
+import { CustomIconButton } from '../../components/Menu/Menu.styled';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
@@ -20,14 +22,18 @@ export function formatDate(date) {
   return new Date(date).toDateString();
 }
 
-function videoInformation(video) {
+function starVideo(video, dispatchSession) {
+  dispatchSession({ type: 'starVideo', payload: video.id });
+}
+
+function videoInformation(video, session, dispatchSession) {
   return (
     <>
       <InfoContainer>
         <Box>
           <Typography>
-            {video.items[0].statistics.viewCount} Visualizations • Published on{' '}
-            {formatDate(video.items[0].snippet.publishedAt)}
+            {video.statistics.viewCount} Visualizations • Published on{' '}
+            {formatDate(video.snippet.publishedAt)}
           </Typography>
         </Box>
       </InfoContainer>
@@ -36,14 +42,31 @@ function videoInformation(video) {
           <ThumbUp />
         </Box>
         <Box>
-          <Typography>{video.items[0].statistics.likeCount}</Typography>
+          <Typography>{video.statistics.likeCount}</Typography>
         </Box>
         <Box mr={1} ml={3}>
           <ThumbDown />
         </Box>
         <Box>
-          <Typography>{video.items[0].statistics.dislikeCount}</Typography>
+          <Typography>{video.statistics.dislikeCount}</Typography>
         </Box>
+        {session.user && (
+          <>
+            <CustomIconButton
+              onClick={() => starVideo(video, dispatchSession)}
+              mr={1}
+              ml={3}
+            >
+              {session.starredVideos.includes(video.id) ? <Star /> : <StarBorder />}
+            </CustomIconButton>
+            <Box>
+              <Typography>
+                {session.starredVideos.includes(video.id) ? 'Remove from' : 'Add to'}{' '}
+                favourites
+              </Typography>
+            </Box>
+          </>
+        )}
       </InfoContainer>
     </>
   );
@@ -56,8 +79,8 @@ function player(video) {
       height="70%"
       allowFullScreen
       frameBorder="0"
-      title={video.items[0].snippet.title}
-      src={extractEmbededVideo(video.items[0])}
+      title={video.snippet.title}
+      src={extractEmbededVideo(video)}
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
     />
   );
@@ -79,14 +102,16 @@ function VideoPage() {
   const { id } = useParams();
   const history = useHistory();
   const { video, suggestions } = useGetVideo(id);
-
+  const { session, dispatchSession } = useSession();
   return (
     <section>
       <Grid data-testid="Video" container spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardVideo>
-            {video && player(video)}
-            <CardContentVideo>{video && videoInformation(video)}</CardContentVideo>
+            {video && player(video.items[0])}
+            <CardContentVideo>
+              {video && videoInformation(video.items[0], session, dispatchSession)}
+            </CardContentVideo>
             {suggestions && (
               <CustomGridList cols={3.5}>
                 {suggestions.items.map((suggestion) =>

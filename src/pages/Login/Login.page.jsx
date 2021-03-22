@@ -26,7 +26,7 @@ function LoginPage() {
   const session = useSession();
   return (
     <section>
-      <NotFoundContainer data-testid="Login" maxWidth="sm">
+      <NotFoundContainer data-testid="Login" maxWidth="xs">
         <CustomPaper elevation={1}>
           <Box display="grid">
             <CustomTextField

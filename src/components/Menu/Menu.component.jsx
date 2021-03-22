@@ -56,7 +56,7 @@ function SearchBar(path) {
 
 function handleLoginButton(userSession, history) {
   const { session, dispatchSession } = userSession;
-  if (session) {
+  if (session.user) {
     dispatchSession({ type: 'logout' });
     history.push('/');
   } else {
@@ -86,7 +86,7 @@ function Menu() {
               }}
             >
               <Typography variant="body1" noWrap>
-                {session ? 'Logout' : 'Login'}
+                {session.user ? 'Logout' : 'Login'}
               </Typography>
             </CustomButton>
           </ToolbarSection>
