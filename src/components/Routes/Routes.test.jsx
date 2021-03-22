@@ -5,6 +5,7 @@ import { Router } from 'react-router-dom';
 import Routes from './Routes.component';
 import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
+import { Session } from '../../Hooks/Session/Session';
 
 describe('App Component Tests', () => {
   it('Should redirect to home', async () => {
@@ -12,13 +13,15 @@ describe('App Component Tests', () => {
     const history = createMemoryHistory();
     history.push(home);
     render(
-      <Router history={history}>
-        <Theme>
-          <Search>
-            <Routes />
-          </Search>
-        </Theme>
-      </Router>
+      <Session>
+        <Router history={history}>
+          <Theme>
+            <Search>
+              <Routes />
+            </Search>
+          </Theme>
+        </Router>
+      </Session>
     );
     expect(screen.getByTestId('Home')).toBeInTheDocument();
   });
@@ -28,13 +31,15 @@ describe('App Component Tests', () => {
     const history = createMemoryHistory();
     history.push(home);
     render(
-      <Router history={history}>
-        <Theme>
-          <Search>
-            <Routes />
-          </Search>
-        </Theme>
-      </Router>
+      <Session>
+        <Router history={history}>
+          <Theme>
+            <Search>
+              <Routes />
+            </Search>
+          </Theme>
+        </Router>
+      </Session>
     );
     expect(screen.getByTestId('Video')).toBeInTheDocument();
   });
@@ -44,11 +49,13 @@ describe('App Component Tests', () => {
     const history = createMemoryHistory();
     history.push(anythingElse);
     render(
-      <Router history={history}>
-        <Theme>
-          <Routes />
-        </Theme>
-      </Router>
+      <Session>
+        <Router history={history}>
+          <Theme>
+            <Routes />
+          </Theme>
+        </Router>
+      </Session>
     );
     expect(screen.getByTestId('NotFound')).toBeInTheDocument();
   });

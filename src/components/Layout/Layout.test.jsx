@@ -5,6 +5,7 @@ import { Router } from 'react-router';
 import Layout from './Layout.component';
 import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
+import { Session } from '../../Hooks/Session/Session';
 
 describe('Layout Component Tests', () => {
   const home = '/';
@@ -12,13 +13,15 @@ describe('Layout Component Tests', () => {
   history.push(home);
   beforeEach(() => {
     render(
-      <Theme>
-        <Router history={history}>
-          <Search>
-            <Layout />
-          </Search>
-        </Router>
-      </Theme>
+      <Session>
+        <Theme>
+          <Router history={history}>
+            <Search>
+              <Layout />
+            </Search>
+          </Router>
+        </Theme>
+      </Session>
     );
   });
 

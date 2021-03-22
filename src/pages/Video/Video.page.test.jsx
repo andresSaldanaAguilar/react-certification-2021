@@ -6,6 +6,7 @@ import VideoPage, { formatDate } from './Video.page';
 import video from '../../utils/video-mock.json';
 import suggestions from '../../utils/suggestions-mock.json';
 import { Theme } from '../../Hooks/Theme/Theme';
+import { Session } from '../../Hooks/Session/Session';
 
 jest.mock('../../Hooks/Video/Video');
 
@@ -15,11 +16,13 @@ describe('Video View Tests', () => {
   history.push(home);
   beforeEach(() => {
     render(
-      <Theme>
-        <Router history={history}>
-          <VideoPage />
-        </Router>
-      </Theme>
+      <Session>
+        <Theme>
+          <Router history={history}>
+            <VideoPage />
+          </Router>
+        </Theme>
+      </Session>
     );
   });
 

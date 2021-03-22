@@ -33,6 +33,7 @@ function LoginPage() {
               name="username"
               label="username"
               variant="outlined"
+              className="usernameIpt"
               size="small"
               onChange={setFormValues}
             />
@@ -40,10 +41,12 @@ function LoginPage() {
               name="password"
               label="password"
               variant="outlined"
+              className="passwordIpt"
               size="small"
               onChange={setFormValues}
             />
             <CustomButton
+              data-testid="loginButton"
               variant="contained"
               onClick={() => doLogin(formValues, session, history)}
             >
