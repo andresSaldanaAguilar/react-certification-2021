@@ -3,6 +3,7 @@ import { Typography } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory, useLocation } from 'react-router-dom';
+import { Star } from '@material-ui/icons';
 import {
   CustomAppBar,
   CustomButton,
@@ -54,6 +55,21 @@ function SearchBar(path) {
   );
 }
 
+function StarredButton(history) {
+  return (
+    <CustomIconButton
+      onClick={() => history.push('/starred')}
+      edge="start"
+      data-testid="StarredButton"
+    >
+      <Star />
+      <Typography variant="body1" noWrap>
+        Starred Videos
+      </Typography>
+    </CustomIconButton>
+  );
+}
+
 function handleLoginButton(userSession, history) {
   const { session, dispatchSession } = userSession;
   if (session.user) {
@@ -77,6 +93,7 @@ function Menu() {
           <ToolbarSection>
             {HomeButton(history)}
             {SearchBar(location.pathname)}
+            {StarredButton(history)}
           </ToolbarSection>
           <ToolbarSection>
             <ThemeIcon fontSize="default" onClick={switchTheme} />

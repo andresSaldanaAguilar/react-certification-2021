@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from '../../pages/Home';
 import LoginPage from '../../pages/Login';
 import NotFound from '../../pages/NotFound';
+import StarredVideosPage from '../../pages/StarredVideos';
 import VideoPage from '../../pages/Video';
 
 function Routes() {
@@ -17,6 +18,9 @@ function Routes() {
       </Route>
       <Route path="/login">
         <LoginPage />
+      </Route>
+      <Route path="/starred">
+        <StarredVideosPage />
       </Route>
       <Route path="*">
         <NotFound />

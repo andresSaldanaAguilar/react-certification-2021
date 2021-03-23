@@ -11,3 +11,8 @@ export const getVideoPath = (id = '') => {
 export const getRelatedVideosPath = (id = '') => {
   return `https://www.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=${id}&maxResults=8&type=video&key=${GOOGLE_API_KEY}`;
 };
+
+export const getVideosByIdPath = (videoIds = []) => {
+  const videosQuery = videoIds.map((value) => `id=${value}`).join('&');
+  return `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&${videosQuery}&key=${GOOGLE_API_KEY}`;
+};

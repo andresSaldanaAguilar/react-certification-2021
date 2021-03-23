@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Router, useLocation } from 'react-router';
+import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { Theme } from '../../Hooks/Theme/Theme';
 import LoginPage from './Login.page';
