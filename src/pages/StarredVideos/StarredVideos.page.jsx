@@ -1,7 +1,6 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
 import VideoMosaic from '../../components/VideoMosaic';
-import { useSession } from '../../Hooks/Session/Session';
 import { useGetStarredVideos } from '../../Hooks/Video/Video';
 
 function getVideoMosaics(data) {
@@ -11,8 +10,7 @@ function getVideoMosaics(data) {
 }
 
 function StarredVideosPage() {
-  const { session } = useSession();
-  const starredVideos = useGetStarredVideos(session.starredVideos);
+  const starredVideos = useGetStarredVideos();
 
   return (
     <section>

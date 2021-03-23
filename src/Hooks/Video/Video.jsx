@@ -7,6 +7,7 @@ import {
   getVideosByIdPath,
 } from '../../utils/paths';
 import { useSearchState } from '../Search/Search';
+import { useSession } from '../Session/Session';
 
 function useSearchVideo() {
   const searchState = useSearchState();
@@ -27,11 +28,12 @@ function useGetVideo(id) {
   return { video, suggestions };
 }
 
-function useGetStarredVideos(usrStarredVideos) {
+function useGetStarredVideos() {
+  const { session } = useSession();
   const [starredVideos, setStarredVideos] = useState(null);
   useEffect(() => {
-    doFetch(getVideosByIdPath(usrStarredVideos), setStarredVideos);
-  }, [usrStarredVideos]);
+    doFetch(getVideosByIdPath(session.starredVideos), setStarredVideos);
+  }, [session.starredVideos]);
   return starredVideos;
 }
 
