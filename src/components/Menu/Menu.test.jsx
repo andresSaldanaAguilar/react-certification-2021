@@ -7,6 +7,7 @@ import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
 import { Session } from '../../Hooks/Session/Session';
 
+jest.mock('../../utils/storage');
 describe('Menu Component Tests', () => {
   it('Should render menu with search bar', async () => {
     const home = '/';

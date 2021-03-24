@@ -28,7 +28,7 @@ function StarredHomePage() {
 
   return (
     <section>
-      <Grid data-testid="Home" container spacing={1}>
+      <Grid data-testid="StarredHome" container spacing={1}>
         {starredVideos &&
           starredVideos.items &&
           getVideoMosaics(starredVideos, dispatchSession)}

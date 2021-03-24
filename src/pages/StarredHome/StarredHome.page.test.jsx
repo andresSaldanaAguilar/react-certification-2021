@@ -2,24 +2,29 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { render, screen } from '@testing-library/react';
-import HomePage from './Home.page';
 import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
+import StarredHomePage from './StarredHome.page';
+import { Session } from '../../Hooks/Session/Session';
 
 jest.mock('../../Hooks/Video/Video');
+jest.mock('../../utils/storage');
+
 describe('Home View Tests', () => {
   const home = '/';
   const history = createMemoryHistory();
   history.push(home);
   beforeEach(() => {
     render(
-      <Theme>
-        <Router history={history}>
-          <Search>
-            <HomePage />
-          </Search>
-        </Router>
-      </Theme>
+      <Session>
+        <Theme>
+          <Router history={history}>
+            <Search>
+              <StarredHomePage />
+            </Search>
+          </Router>
+        </Theme>
+      </Session>
     );
   });
 

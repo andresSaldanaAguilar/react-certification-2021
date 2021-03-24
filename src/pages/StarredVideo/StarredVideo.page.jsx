@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  Grid,
-  GridListTile,
-  GridListTileBar,
-  Typography,
-} from '@material-ui/core';
-import { Star, StarBorder, ThumbDown, ThumbUp } from '@material-ui/icons';
+import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
+import { ThumbDown, ThumbUp } from '@material-ui/icons';
 import React from 'react';
 import { useParams, useHistory } from 'react-router';
 import {
@@ -27,10 +20,6 @@ function extractEmbededVideo(video) {
 
 export function formatDate(date) {
   return new Date(date).toDateString();
-}
-
-function starVideo(video, dispatchSession) {
-  dispatchSession({ type: 'starVideo', payload: video.id });
 }
 
 function videoInformation(video) {
@@ -101,7 +90,7 @@ function StarredVideoPage() {
 
   return (
     <section>
-      <Grid data-testid="Video" container spacing={1}>
+      <Grid data-testid="StarredVideo" container spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardVideo>
             {video && player(video.items[0])}
