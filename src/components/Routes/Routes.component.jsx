@@ -4,7 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from '../../pages/Home';
 import LoginPage from '../../pages/Login';
 import NotFound from '../../pages/NotFound';
-import StarredVideosPage from '../../pages/StarredVideos';
+import StarredVideoPage from '../../pages/StarredVideo';
+import StarredHomePage from '../../pages/StarredHome';
 import VideoPage from '../../pages/Video';
 
 function Routes() {
@@ -20,7 +21,10 @@ function Routes() {
         <LoginPage />
       </Route>
       <Route path="/starred">
-        <StarredVideosPage />
+        <StarredHomePage />
+      </Route>
+      <Route exact path="/starred_video=:id">
+        <StarredVideoPage />
       </Route>
       <Route path="*">
         <NotFound />

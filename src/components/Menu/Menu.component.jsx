@@ -1,9 +1,8 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Menu, MenuItem, Typography } from '@material-ui/core';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Star } from '@material-ui/icons';
 import {
   CustomAppBar,
   CustomButton,
@@ -55,21 +54,6 @@ function SearchBar(path) {
   );
 }
 
-function StarredButton(history) {
-  return (
-    <CustomIconButton
-      onClick={() => history.push('/starred')}
-      edge="start"
-      data-testid="StarredButton"
-    >
-      <Star />
-      <Typography variant="body1" noWrap>
-        Starred Videos
-      </Typography>
-    </CustomIconButton>
-  );
-}
-
 function handleLoginButton(userSession, history) {
   const { session, dispatchSession } = userSession;
   if (session.user) {
@@ -80,12 +64,44 @@ function handleLoginButton(userSession, history) {
   }
 }
 
-function Menu() {
+function LoginSection(userSession, history) {
+  const { session } = userSession;
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  return (
+    <>
+      <CustomButton onClick={handleClick}>
+        <Typography variant="body1" noWrap>
+          {session.user ? session.user.name : 'Not signed'} ▼
+        </Typography>
+      </CustomButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+      >
+        {session.user && (
+          <MenuItem onClick={() => history.push('/starred')}>Starred Videos</MenuItem>
+        )}
+        <MenuItem onClick={() => handleLoginButton(userSession, history)}>
+          {session.user ? 'Logout' : 'Login'}
+        </MenuItem>
+      </Menu>
+    </>
+  );
+}
+
+function NavBar() {
   const switchTheme = useSwitchTheme();
   const location = useLocation();
   const history = useHistory();
   const userSession = useSession();
-  const { session } = userSession;
   return (
     <>
       <CustomAppBar position="fixed" data-testid="CustomAppBar">
@@ -93,19 +109,10 @@ function Menu() {
           <ToolbarSection>
             {HomeButton(history)}
             {SearchBar(location.pathname)}
-            {StarredButton(history)}
           </ToolbarSection>
           <ToolbarSection>
             <ThemeIcon fontSize="default" onClick={switchTheme} />
-            <CustomButton
-              onClick={() => {
-                handleLoginButton(userSession, history);
-              }}
-            >
-              <Typography variant="body1" noWrap>
-                {session.user ? 'Logout' : 'Login'}
-              </Typography>
-            </CustomButton>
+            {LoginSection(userSession, history)}
           </ToolbarSection>
         </CustomToolbar>
       </CustomAppBar>
@@ -113,4 +120,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default NavBar;

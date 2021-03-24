@@ -32,7 +32,9 @@ function useGetStarredVideos() {
   const { session } = useSession();
   const [starredVideos, setStarredVideos] = useState(null);
   useEffect(() => {
-    doFetch(getVideosByIdPath(session.starredVideos), setStarredVideos);
+    if (session.starredVideos) {
+      doFetch(getVideosByIdPath(session.starredVideos), setStarredVideos);
+    }
   }, [session.starredVideos]);
   return starredVideos;
 }

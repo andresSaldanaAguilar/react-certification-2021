@@ -49,8 +49,8 @@ function sessionReducer(state, action) {
 
 function Session({ children }) {
   const [session, dispatchSession] = useReducer(sessionReducer, {
-    user: null,
-    starredVideos: null,
+    user: storage.get('user'),
+    starredVideos: storage.get('user') ? getStarredVideos(storage.get('user')) : null,
   });
   const value = { session, dispatchSession };
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;

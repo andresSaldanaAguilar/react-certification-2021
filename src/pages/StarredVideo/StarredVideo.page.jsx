@@ -14,9 +14,10 @@ import {
   CardVideo,
   CustomGridList,
   InfoContainer,
-} from './Video.page.styled';
-import { useGetVideo } from '../../Hooks/Video/Video';
+} from './StarredVideo.page.styled';
+import { useGetStarredVideos, useGetVideo } from '../../Hooks/Video/Video';
 import { useSession } from '../../Hooks/Session/Session';
+import NotFoundPage from '../NotFound';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
@@ -89,8 +90,8 @@ function player(video) {
 function VideoSuggestion(suggestion, history) {
   return (
     <GridListTile
-      key={suggestion.id.videoId}
-      onClick={() => history.push(`/video=${suggestion.id.videoId}`)}
+      key={suggestion.id}
+      onClick={() => history.push(`/starred_video=${suggestion.id}`)}
     >
       <img src={suggestion.snippet.thumbnails.high.url} alt={suggestion.snippet.title} />
       <GridListTileBar title={suggestion.snippet.title} />
@@ -98,11 +99,17 @@ function VideoSuggestion(suggestion, history) {
   );
 }
 
-function VideoPage() {
+function StarredVideoPage() {
   const { id } = useParams();
   const history = useHistory();
-  const { video, suggestions } = useGetVideo(id);
+  const starredVideos = useGetStarredVideos();
+  const { video } = useGetVideo(id);
   const { session, dispatchSession } = useSession();
+
+  if (!session.user) {
+    return <NotFoundPage />;
+  }
+
   return (
     <section>
       <Grid data-testid="Video" container spacing={1}>
@@ -112,11 +119,11 @@ function VideoPage() {
             <CardContentVideo>
               {video && videoInformation(video.items[0], session, dispatchSession)}
             </CardContentVideo>
-            {suggestions && (
+            {starredVideos && (
               <CustomGridList cols={3.5}>
-                {suggestions.items.map((suggestion) =>
-                  VideoSuggestion(suggestion, history)
-                )}
+                {starredVideos.items
+                  .filter((item) => item.id !== id)
+                  .map((suggestion) => VideoSuggestion(suggestion, history))}
               </CustomGridList>
             )}
           </CardVideo>
@@ -126,4 +133,4 @@ function VideoPage() {
   );
 }
 
-export default VideoPage;
+export default StarredVideoPage;
