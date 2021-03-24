@@ -33,7 +33,7 @@ function starVideo(video, dispatchSession) {
   dispatchSession({ type: 'starVideo', payload: video.id });
 }
 
-function videoInformation(video, session, dispatchSession) {
+function videoInformation(video) {
   return (
     <>
       <InfoContainer>
@@ -57,17 +57,6 @@ function videoInformation(video, session, dispatchSession) {
         <Box>
           <Typography>{video.statistics.dislikeCount}</Typography>
         </Box>
-        {session.user && (
-          <Box>
-            <Button size="small" onClick={() => starVideo(video, dispatchSession)}>
-              {session.starredVideos.includes(video.id) ? (
-                <Star fontSize="small" />
-              ) : (
-                <StarBorder fontSize="small" />
-              )}
-            </Button>
-          </Box>
-        )}
       </InfoContainer>
     </>
   );
@@ -104,7 +93,7 @@ function StarredVideoPage() {
   const history = useHistory();
   const starredVideos = useGetStarredVideos();
   const { video } = useGetVideo(id);
-  const { session, dispatchSession } = useSession();
+  const { session } = useSession();
 
   if (!session.user) {
     return <NotFoundPage />;
@@ -117,7 +106,7 @@ function StarredVideoPage() {
           <CardVideo>
             {video && player(video.items[0])}
             <CardContentVideo>
-              {video && videoInformation(video.items[0], session, dispatchSession)}
+              {video && videoInformation(video.items[0])}
             </CardContentVideo>
             {starredVideos && (
               <CustomGridList cols={3.5}>

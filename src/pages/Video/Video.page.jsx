@@ -114,9 +114,9 @@ function VideoPage() {
             </CardContentVideo>
             {suggestions && (
               <CustomGridList cols={3.5}>
-                {suggestions.items.map((suggestion) =>
-                  VideoSuggestion(suggestion, history)
-                )}
+                {suggestions.items
+                  .filter((suggestion) => suggestion.snippet !== undefined)
+                  .map((suggestion) => VideoSuggestion(suggestion, history))}
               </CustomGridList>
             )}
           </CardVideo>
