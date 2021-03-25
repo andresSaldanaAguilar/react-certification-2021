@@ -74,13 +74,13 @@ function LoginSection(userSession, history) {
 
   return (
     <>
-      <CustomButton onClick={handleClick}>
+      <CustomButton data-testid="UserMenuBtn" onClick={handleClick}>
         <Typography variant="body1" noWrap>
           {session.user ? session.user.name : 'Not signed'} ▼
         </Typography>
       </CustomButton>
       <Menu
-        id="simple-menu"
+        data-testid="UserMenu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

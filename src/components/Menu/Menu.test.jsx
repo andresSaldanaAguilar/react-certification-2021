@@ -7,7 +7,6 @@ import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
 import { Session } from '../../Hooks/Session/Session';
 
-jest.mock('../../utils/storage');
 describe('Menu Component Tests', () => {
   it('Should render menu with search bar', async () => {
     const home = '/';
@@ -26,6 +25,7 @@ describe('Menu Component Tests', () => {
     );
     expect(screen.getByTestId('CustomAppBar')).toBeInTheDocument();
     expect(screen.getByTestId('SearchBar')).toBeInTheDocument();
+    expect(screen.getByTestId('UserMenuBtn')).toBeInTheDocument();
   });
 
   it('Should render menu without search bar', async () => {
@@ -45,5 +45,25 @@ describe('Menu Component Tests', () => {
     );
     expect(screen.getByTestId('CustomAppBar')).toBeInTheDocument();
     expect(screen.queryByTestId('SearchBar')).not.toBeInTheDocument();
+  });
+
+  it('Should render display the options when not logged in', async () => {
+    const anythingElseButHome = '*';
+    const history = createMemoryHistory();
+    history.push(anythingElseButHome);
+    render(
+      <Session>
+        <Router history={history}>
+          <Theme>
+            <Search>
+              <Menu />
+            </Search>
+          </Theme>
+        </Router>
+      </Session>
+    );
+    screen.getByTestId('UserMenuBtn').click();
+    const loginBtn = screen.getByText('Login');
+    loginBtn.click();
   });
 });
