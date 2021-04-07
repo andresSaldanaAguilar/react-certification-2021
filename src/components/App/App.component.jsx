@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Search } from '../../Hooks/Search/Search';
+import { Session } from '../../Hooks/Session/Session';
 import { Theme } from '../../Hooks/Theme/Theme';
 import Layout from '../Layout';
 import Routes from '../Routes/Routes.component';
@@ -11,11 +12,13 @@ function App() {
     <Theme>
       <GlobalStyles />
       <BrowserRouter>
-        <Search>
-          <Layout>
-            <Routes />
-          </Layout>
-        </Search>
+        <Session>
+          <Search>
+            <Layout>
+              <Routes />
+            </Layout>
+          </Search>
+        </Session>
       </BrowserRouter>
     </Theme>
   );

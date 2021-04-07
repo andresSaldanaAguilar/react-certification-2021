@@ -1,13 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
-import Layout from './Layout.component';
+import { render, screen } from '@testing-library/react';
 import { Search } from '../../Hooks/Search/Search';
 import { Theme } from '../../Hooks/Theme/Theme';
+import StarredHomePage from './StarredHome.page';
 import { Session } from '../../Hooks/Session/Session';
 
-describe('Layout Component Tests', () => {
+jest.mock('../../Hooks/Video/Video');
+jest.mock('../../utils/storage');
+
+describe('Home View Tests', () => {
   const home = '/';
   const history = createMemoryHistory();
   history.push(home);
@@ -17,7 +20,7 @@ describe('Layout Component Tests', () => {
         <Theme>
           <Router history={history}>
             <Search>
-              <Layout />
+              <StarredHomePage />
             </Search>
           </Router>
         </Theme>
@@ -25,8 +28,7 @@ describe('Layout Component Tests', () => {
     );
   });
 
-  it('Should render the layout component', async () => {
-    expect(screen.getByTestId('CustomAppBar')).toBeInTheDocument();
-    expect(screen.getByTestId('ContentContainer')).toBeInTheDocument();
+  it('Should render 30 mock video mosaics', () => {
+    expect(screen.getAllByTestId('VideoMosaicLink')).toHaveLength(30);
   });
 });

@@ -11,4 +11,8 @@ const useSearchVideo = jest.fn(() => {
   return searchResults;
 });
 
-export { useGetVideo, useSearchVideo };
+const useGetStarredVideos = jest.fn(() => {
+  return searchResults;
+});
+
+export { useGetVideo, useSearchVideo, useGetStarredVideos };

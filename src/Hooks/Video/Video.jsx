@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import doFetch from '../../utils/fetch';
-import { getRelatedVideosPath, getVideoPath, searchVideoPath } from '../../utils/paths';
+import {
+  getRelatedVideosPath,
+  getVideoPath,
+  searchVideoPath,
+  getVideosByIdPath,
+} from '../../utils/paths';
 import { useSearchState } from '../Search/Search';
+import { useSession } from '../Session/Session';
 
 function useSearchVideo() {
   const searchState = useSearchState();
@@ -22,4 +28,15 @@ function useGetVideo(id) {
   return { video, suggestions };
 }
 
-export { useSearchVideo, useGetVideo };
+function useGetStarredVideos() {
+  const { session } = useSession();
+  const [starredVideos, setStarredVideos] = useState(null);
+  useEffect(() => {
+    if (session.starredVideos) {
+      doFetch(getVideosByIdPath(session.starredVideos), setStarredVideos);
+    }
+  }, [session.starredVideos]);
+  return starredVideos;
+}
+
+export { useSearchVideo, useGetVideo, useGetStarredVideos };

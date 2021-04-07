@@ -1,11 +1,11 @@
 import React from 'react';
-import Menu from '../Menu/Menu.component';
+import NavBar from '../Menu/Menu.component';
 import { ContentContainer } from './Layout.styled';
 
 function Layout({ children }) {
   return (
     <>
-      <Menu />
+      <NavBar />
       <ContentContainer data-testid="ContentContainer">{children}</ContentContainer>
     </>
   );

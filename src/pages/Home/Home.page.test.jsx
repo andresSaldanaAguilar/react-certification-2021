@@ -14,13 +14,11 @@ describe('Home View Tests', () => {
   beforeEach(() => {
     render(
       <Theme>
-        <Theme>
-          <Router history={history}>
-            <Search>
-              <HomePage />
-            </Search>
-          </Router>
-        </Theme>
+        <Router history={history}>
+          <Search>
+            <HomePage />
+          </Search>
+        </Router>
       </Theme>
     );
   });

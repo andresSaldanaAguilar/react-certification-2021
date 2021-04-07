@@ -4,7 +4,7 @@ import { NotFoundContainer } from './NotFound.styled';
 
 function NotFoundPage() {
   return (
-    <section className="not-found">
+    <section>
       <NotFoundContainer data-testid="NotFound" maxWidth="sm">
         <Typography variant="h1">404 Nothing Found</Typography>
       </NotFoundContainer>

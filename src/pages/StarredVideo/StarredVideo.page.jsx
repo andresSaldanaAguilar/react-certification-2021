@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  Grid,
-  GridListTile,
-  GridListTileBar,
-  Typography,
-} from '@material-ui/core';
-import { Star, StarBorder, ThumbDown, ThumbUp } from '@material-ui/icons';
+import { Box, Grid, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
+import { ThumbDown, ThumbUp } from '@material-ui/icons';
 import React from 'react';
 import { useParams, useHistory } from 'react-router';
 import {
@@ -14,9 +7,10 @@ import {
   CardVideo,
   CustomGridList,
   InfoContainer,
-} from './Video.page.styled';
-import { useGetVideo } from '../../Hooks/Video/Video';
+} from './StarredVideo.page.styled';
+import { useGetStarredVideos, useGetVideo } from '../../Hooks/Video/Video';
 import { useSession } from '../../Hooks/Session/Session';
+import NotFoundPage from '../NotFound';
 
 function extractEmbededVideo(video) {
   return `https://${video.player.embedHtml.match(
@@ -28,11 +22,7 @@ export function formatDate(date) {
   return new Date(date).toDateString();
 }
 
-function starVideo(video, dispatchSession) {
-  dispatchSession({ type: 'starVideo', payload: video.id });
-}
-
-function videoInformation(video, session, dispatchSession) {
+function videoInformation(video) {
   return (
     <>
       <InfoContainer>
@@ -56,17 +46,6 @@ function videoInformation(video, session, dispatchSession) {
         <Box>
           <Typography>{video.statistics.dislikeCount}</Typography>
         </Box>
-        {session.user && (
-          <Box>
-            <Button size="small" onClick={() => starVideo(video, dispatchSession)}>
-              {session.starredVideos.includes(video.id) ? (
-                <Star fontSize="small" />
-              ) : (
-                <StarBorder fontSize="small" />
-              )}
-            </Button>
-          </Box>
-        )}
       </InfoContainer>
     </>
   );
@@ -89,8 +68,8 @@ function player(video) {
 function VideoSuggestion(suggestion, history) {
   return (
     <GridListTile
-      key={suggestion.id.videoId}
-      onClick={() => history.push(`/video=${suggestion.id.videoId}`)}
+      key={suggestion.id}
+      onClick={() => history.push(`/starred_video=${suggestion.id}`)}
     >
       <img src={suggestion.snippet.thumbnails.high.url} alt={suggestion.snippet.title} />
       <GridListTileBar title={suggestion.snippet.title} />
@@ -98,24 +77,30 @@ function VideoSuggestion(suggestion, history) {
   );
 }
 
-function VideoPage() {
+function StarredVideoPage() {
   const { id } = useParams();
   const history = useHistory();
-  const { video, suggestions } = useGetVideo(id);
-  const { session, dispatchSession } = useSession();
+  const starredVideos = useGetStarredVideos();
+  const { video } = useGetVideo(id);
+  const { session } = useSession();
+
+  if (!session.user) {
+    return <NotFoundPage />;
+  }
+
   return (
     <section>
-      <Grid data-testid="Video" container spacing={1}>
+      <Grid data-testid="StarredVideo" container spacing={1}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <CardVideo>
             {video && player(video.items[0])}
             <CardContentVideo>
-              {video && videoInformation(video.items[0], session, dispatchSession)}
+              {video && videoInformation(video.items[0])}
             </CardContentVideo>
-            {suggestions && (
+            {starredVideos && (
               <CustomGridList cols={3.5}>
-                {suggestions.items
-                  .filter((suggestion) => suggestion.snippet !== undefined)
+                {starredVideos.items
+                  .filter((item) => item.id !== id)
                   .map((suggestion) => VideoSuggestion(suggestion, history))}
               </CustomGridList>
             )}
@@ -126,4 +111,4 @@ function VideoPage() {
   );
 }
 
-export default VideoPage;
+export default StarredVideoPage;

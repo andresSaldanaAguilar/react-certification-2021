@@ -2,16 +2,16 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import VideoPage, { formatDate } from './Video.page';
 import video from '../../utils/video-mock.json';
-import suggestions from '../../utils/suggestions-mock.json';
 import { Theme } from '../../Hooks/Theme/Theme';
 import { Session } from '../../Hooks/Session/Session';
+import StarredVideoPage, { formatDate } from './StarredVideo.page';
 
 jest.mock('../../Hooks/Video/Video');
+jest.mock('../../utils/storage');
 
 describe('Video View Tests', () => {
-  const home = '/video=TEST_ID';
+  const home = '/starred_video=TEST_ID';
   const history = createMemoryHistory();
   history.push(home);
   beforeEach(() => {
@@ -19,15 +19,15 @@ describe('Video View Tests', () => {
       <Session>
         <Theme>
           <Router history={history}>
-            <VideoPage />
+            <StarredVideoPage />
           </Router>
         </Theme>
       </Session>
     );
   });
 
-  it('Should render the video page and the related information for the video', () => {
-    expect(screen.getByTestId('Video')).toBeInTheDocument();
+  it('Should render the video page and the related information for the starred video', () => {
+    expect(screen.getByTestId('StarredVideo')).toBeInTheDocument();
   });
 
   it('Should render the video player', () => {
@@ -43,13 +43,5 @@ describe('Video View Tests', () => {
     expect(
       screen.getByText(formatDate(video.items[0].snippet.publishedAt), { exact: false })
     ).toBeInTheDocument();
-  });
-
-  it('Should render the video suggestions', () => {
-    suggestions.items.forEach((suggestion) => {
-      expect(
-        screen.getByText(suggestion.snippet.title, { exact: false })
-      ).toBeInTheDocument();
-    });
   });
 });
